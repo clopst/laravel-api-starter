@@ -18,16 +18,14 @@ class UserSeeder extends Seeder
             [
                 'name' => 'Superadmin',
                 'email' => 'admin@laravel.com',
-                'password' => Hash::make('12345678'),
-                'role_id' => 1,
+                'password' => Hash::make('123456'),
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],
             [
                 'name' => 'John Doe',
                 'email' => 'john.doe@laravel.com',
-                'password' => Hash::make('12345678'),
-                'role_id' => 2,
+                'password' => Hash::make('123456'),
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ]
