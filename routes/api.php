@@ -37,16 +37,16 @@ Route::group(
         'prefix' => 'users'
     ], function () {
         Route::get('', 'UserController@index')
-            ->name('user-index');
+            ->name('users.index');
         Route::post('', 'UserController@store')
-            ->name('user-store');
+            ->name('users.store');
         Route::get('{user}', 'UserController@show')
-            ->name('user-show');
+            ->name('users.show');
         Route::put('{user}', 'UserController@update')
-            ->name('user-update');
+            ->name('users.update');
         Route::post('{user}/change-password', 'UserController@changePassword')
-            ->name('user-change-password');
+            ->name('users.change-password');
         Route::delete('{user}', 'UserController@destroy')
-            ->name('user-destroy');
+            ->name('users.destroy');
     }
 );
