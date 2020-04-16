@@ -18,8 +18,22 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::group([
+    'prefix' => 'auth'
+], function () {
+    Route::post('login', 'AuthController@login')->name('auth.login');
+
+    Route::group(['middleware' => 'auth:api'], function () {
+        Route::get('logout', 'AuthController@logout')->name('auth.logout');
+        Route::get('info', 'AuthController@info')->name('auth.info');
+        Route::post('change-password', 'AuthController@changePassword')->name('auth.change-password');
+        Route::post('update-profile', 'AuthController@updateProfile')->name('auth.update-profile');
+    });
+});
+
 Route::group(
     [
+        'middleware' => 'auth:api',
         'prefix' => 'users'
     ], function () {
         Route::get('', 'UserController@index')
@@ -28,7 +42,7 @@ Route::group(
             ->name('user-store');
         Route::get('{user}', 'UserController@show')
             ->name('user-show');
-        Route::post('{user}', 'UserController@update')
+        Route::put('{user}', 'UserController@update')
             ->name('user-update');
         Route::post('{user}/change-password', 'UserController@changePassword')
             ->name('user-change-password');

@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+
+use App\Models\User;
 
 class UserController extends Controller
 {
@@ -28,7 +29,7 @@ class UserController extends Controller
         $sortKey = $request->sortKey ?? 'id';
         $sortOrder = $request->sortOrder ?? 'asc';
 
-        $query = User::with(['employee'])->orderBy($sortKey, $sortOrder);
+        $query = User::orderBy($sortKey, $sortOrder);
         $pagination = [];
 
         if ($request->search) {
@@ -124,8 +125,10 @@ class UserController extends Controller
             'email' => 'nullable|email|unique:users,email,' . $user->id
         ]);
 
-        $user->name = $request->name;
-        $user->email = $request->email;
+        $userInputs = $request->only(['name', 'email']);
+        foreach ($userInputs as $key => $value) {
+            $user->{$key} = $value;
+        }
         $user->save();
 
         return response()->json([
